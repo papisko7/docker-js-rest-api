@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista książek</title>
+</head>
+<body>
+
+<h2>Tytuły:</h2>
+<ul>
+<% books.forEach(function(book, index){ %>
+    <li>
+        <b><%= book.title %></b> - <%= book.author %>
+
+        <button onclick="toggleForm('<%= book._id %>')">EDYTUJ</button>
+
+        <form id="form-<%= book._id %>" 
+              action="/edit/<%= book._id %>" 
+              method="POST" 
+              style="display:none;">
+              
+            <input type="text" name="title" placeholder="nowy tytuł">
+            <input type="text" name="author" placeholder="nowy autor">
+            <button type="submit">ZAPISZ</button>
+        </form>
+
+        <form action="/delete/<%= book._id%>" method="POST" style="display:inline;">
+            <button type="submit">USUŃ</button>
+        </form>
+    </li>
+<% }); %>
+</ul>
+
+<form action="/add" method="POST">
+    Nowy tytuł:
+    <input type="text" name="title">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Nowy autor:
+    <input type="text" name="author">
+    <button type="submit">DODAJ</button>
+</form>
+
+<script>
+function toggleForm(id) {
+    const form = document.getElementById("form-" + id);
+
+    if (form.style.display === "none") {
+        form.style.display = "inline";
+    } else {
+        form.style.display = "none";
+    }
+}
+</script>
+</body>
+</html>
