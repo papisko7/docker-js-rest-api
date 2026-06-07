@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: ./js-rest-api
+      dockerfile: ../docker/app.Dockerfile
+    container_name: library_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://db:27017/people_db
+    depends_on:
+      - db
+    networks:
+      - library_network
+
+  db:
+    image: mongo:7.0
+    container_name: library_database
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_stored_data:/data/db
+    networks:
+      - library_network
+
+networks:
+  library_network:
+    driver: bridge
+
+volumes:
+  mongo_stored_data:
