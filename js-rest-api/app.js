@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Book = require("./models/book");
 
-var mongoDB = 'mongodb://127.0.0.1:27017/people_db';
+var mongoDB = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/people_db';
 mongoose.connect(mongoDB);
 
 var db = mongoose.connection;
